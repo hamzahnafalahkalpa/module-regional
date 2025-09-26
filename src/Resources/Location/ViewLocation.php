@@ -20,12 +20,30 @@ class ViewLocation extends ApiResource
             'id'   => $this->id,
             'code' => $this->code,
             'name' => $this->name,
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
-            'location' => $this->getLocation($this->getMorphClass(),$this->name)
+            'latitude'       => $this->latitude,
+            'longitude'      => $this->longitude,
+            'location'       => $this->getLocation($this->getMorphClass(),$this->name)
         ];
-        if ($this->getMorphClass() == 'Village'){
-            $arr['post_code'] = $this->post_code;
+        switch ($this->getMorphClass()) {
+            case 'Village':
+                $arr['post_code']      = $this->post_code;
+                $arr['province_id']    = $this->province_id;
+                $arr['district_id']    = $this->district_id;
+                $arr['subdistrict_id'] = $this->subdistrict_id;
+                $arr['village_id']     = $this->id;
+            break;
+            case 'District':
+                $arr['province_id']    = $this->province_id;
+                $arr['district_id']    = $this->id;
+            break;
+            case 'Subdistrict':
+                $arr['province_id']    = $this->province_id;
+                $arr['district_id']    = $this->district_id;
+                $arr['subdistrict_id'] = $this->id;
+            break;
+            case 'Province':
+                $arr['province_id']    = $this->id;
+            break;
         }
         return $arr;
     }
