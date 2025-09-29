@@ -27,4 +27,8 @@ class AddressPropsData extends Data implements DataAddressPropsData{
     #[MapName('longitude')]
     #[MapInputName('longitude')]
     public ?string $longitude = null;
+
+    #[MapName('props')]
+    #[MapInputName('props')]
+    public ?array $props = null;
 }
