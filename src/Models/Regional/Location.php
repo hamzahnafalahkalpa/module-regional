@@ -34,23 +34,24 @@ class Location extends BaseModel
         $type ??= $this->getMorphClass();
         switch ($type) {
             case 'Province':
-                return $name ?? $this->name;
+                return 'Prov. '.$name ?? $this->name;
             break;
             case 'District':
-                return 'Prov. '.$this->getLocation('Province',$this->province?->name).', '.$name ?? $this->name;
+                return implode(', ',[
+                    $this->getLocation('Province',$this->province?->name),
+                    $this->type == 1 ? 'Kota. ' :'Kab. '.
+                    $name ?? $this->name
+                ]);
             break;
             case 'Subdistrict':
                 return implode(', ',[
-                    'Prov. '.$this->getLocation('Province',$this->province?->name),
-                    'Kab. '.$this->getLocation('District',$this->district?->name),
-                    $name ?? $this->name
+                    $this->getLocation('District',$this->district?->name),
+                    'Kec. '.$name ?? $this->name
                 ]);
             break;
             case 'Village':
                 return implode(', ',[
-                    'Prov. '.$this->getLocation('Province',$this->province?->name),
-                    'Kab. '.$this->getLocation('District',$this->district?->name),
-                    'Kec. '.$this->getLocation('Subdistrict',$this->subdistrict?->name),
+                    $this->getLocation('Subdistrict',$this->subdistrict?->name),
                     $name ?? $this->name
                 ]);
             break;
