@@ -45,9 +45,21 @@ class AddressData extends Data implements DataAddressData{
     #[MapInputName('village_id')]
     public ?int $village_id = null;
 
+    #[MapName('village')]
+    #[MapInputName('village')]
+    public ?array $village = null;
+
+    #[MapName('subdistrict')]
+    #[MapInputName('subdistrict')]
+    public ?array $subdistrict = null;
+
     #[MapName('village_model')]
     #[MapInputName('village_model')]
     public ?object $village_model = null;
+
+    #[MapName('subdistrict_model')]
+    #[MapInputName('subdistrict_model')]
+    public ?object $subdistrict_model = null;
 
     #[MapName('props')]
     #[MapInputName('props')]
@@ -56,6 +68,19 @@ class AddressData extends Data implements DataAddressData{
     public static function after(self $data): self{
         $new = self::new();
         $props = &$data->props->props;
+
+        $data->flag ??= Flag::OTHER->value;
+
+        if (isset($data->village)) $data->village_id = $data->village['id'] ?? null;
+        if (isset($data->subdistrict)) $data->subdistrict_id = $data->subdistrict['id'] ?? null;
+
+        if (isset($data->subdistrict_id)){
+            $data->subdistrict_model = $subdistrict_model = $new->SubdistrictModel()->findOrFail($data->subdistrict_id);
+            $data->province_id ??= $subdistrict_model->province_id;
+            $data->district_id ??= $subdistrict_model->district_id;
+            $data->subdistrict_id ??= $subdistrict_model->subdistrict_id;
+            $props['prop_subdistrict'] = $subdistrict_model->toViewApi()->resolve();
+        }
 
         if (isset($data->village_id)){
             $data->village_model = $village_model = $new->VillageModel()->findOrFail($data->village_id);

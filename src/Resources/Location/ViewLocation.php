@@ -31,6 +31,7 @@ class ViewLocation extends ApiResource
                 $arr['district_id']    = $this->district_id;
                 $arr['subdistrict_id'] = $this->subdistrict_id;
                 $arr['village_id']     = $this->id;
+                $arr['village']        = $this->prop_village;
             break;
             case 'District':
                 $arr['province_id']    = $this->province_id;
@@ -40,6 +41,7 @@ class ViewLocation extends ApiResource
                 $arr['province_id']    = $this->province_id;
                 $arr['district_id']    = $this->district_id;
                 $arr['subdistrict_id'] = $this->id;
+                $arr['subdistrict']    = $this->prop_subdistrict;
             break;
             case 'Province':
                 $arr['province_id']    = $this->id;
