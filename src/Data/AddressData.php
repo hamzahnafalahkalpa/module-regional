@@ -71,8 +71,8 @@ class AddressData extends Data implements DataAddressData{
 
         $data->flag ??= Flag::OTHER->value;
 
-        if (isset($data->village)) $data->village_id = $data->village['id'] ?? null;
-        if (isset($data->subdistrict)) $data->subdistrict_id = $data->subdistrict['id'] ?? null;
+        if (isset($data->village)) $data->village_id = $data->village['id'] ?? $data->village['village_id'] ?? null;
+        if (isset($data->subdistrict)) $data->subdistrict_id = $data->subdistrict['id'] ?? $data->subdistrict['subdistrict_id'] ?? null;
 
         if (isset($data->subdistrict_id)){
             $data->subdistrict_model = $subdistrict_model = $new->SubdistrictModel()->findOrFail($data->subdistrict_id);
