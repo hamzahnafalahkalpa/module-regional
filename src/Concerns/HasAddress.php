@@ -11,6 +11,8 @@ trait HasAddress
         if (is_object($address) && !$address instanceof AddressData) {
           throw new \Exception('address must be an instance of AddressData');
         }elseif (is_array($address)){
+          unset($address['village_model']);
+          unset($address['subdistrict_model']);
           $address = AddressData::from($this->mergeArray($address,[
             'flag'       => $flag, 
             'model_id'   => $this->getKey(),
