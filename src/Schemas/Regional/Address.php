@@ -46,11 +46,12 @@ class Address extends PackageManagement implements RegionalAddress{
         if (isset($id)){
             $model = Str::ucfirst($type);
             $model = $this->{$model.'Model'}()->findOrFail($id);
-            $address->sync($model,['id','name']);
+            $address->sync($model,['id','name','code']);
         }else{
             $address->{'prop_'.$type} = [
                 'id'   => null,
-                'name' => null
+                'name' => null,
+                'code' => null
             ];
             $address->save();
         }
