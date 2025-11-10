@@ -21,7 +21,7 @@ class Address extends PackageManagement implements RegionalAddress{
                         'model_id'   => $address_dto->model_id,
                         'flag'       => $address_dto->flag ?? Flag::OTHER->value
                     ];
-        $address = $this->address()->updateOrCreate($guard,[
+        $address = $this->usingEntity()->updateOrCreate($guard,[
             'name'           => $address_dto->name,
             'province_id'    => $address_dto->province_id,
             'district_id'    => $address_dto->district_id,
