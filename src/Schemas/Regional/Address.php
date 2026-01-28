@@ -43,16 +43,15 @@ class Address extends PackageManagement implements RegionalAddress{
     }
 
     private function setRegional(Model &$address, string $type, ?int $id = null): self{
+        $model = Str::ucfirst($type);
+        $model = $this->{$model.'Model'}();
         if (isset($id)){
-            $model = Str::ucfirst($type);
-            $model = $this->{$model.'Model'}()->findOrFail($id);
-            $address->sync($model,['id','name','code']);
+            $model = $model->findOrFail($id);
+            $model->load($model->showUsingRelation());
+            $address->setAttribute('prop_'.$type,$model->toShowApi()->resolve());
+            $address->save();
         }else{
-            $address->{'prop_'.$type} = [
-                'id'   => null,
-                'name' => null,
-                'code' => null
-            ];
+            $address->{'prop_'.$type} = $model->toShowApi()->resolve();
             $address->save();
         }
         return $this;

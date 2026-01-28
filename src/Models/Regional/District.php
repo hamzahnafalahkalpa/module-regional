@@ -13,6 +13,6 @@ class District extends Location
         ];
     }
 
-    public function district(){return $this->hasOneModel('District');}
-    public function districts(){return $this->hasManyModel('District');}
+    public function province(){return $this->belongsToModel('Province');}
+    public function subdistricts(){return $this->hasManyModel('Subdistrict');}
 }

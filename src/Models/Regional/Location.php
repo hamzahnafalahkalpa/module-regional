@@ -26,6 +26,10 @@ class Location extends BaseModel
         return ShowLocation::class;
     }
 
+    public function viewUsingRelation(){
+        return [];
+    }
+
     public function showUsingRelation(){
         return $this->viewUsingRelation();
     }
