@@ -15,7 +15,7 @@ class AddressData extends Data implements DataAddressData{
 
     #[MapName('name')]
     #[MapInputName('name')]
-    public string $name;
+    public ?string $name = null;
 
     #[MapName('model_type')]
     #[MapInputName('model_type')]
